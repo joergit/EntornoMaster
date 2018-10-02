@@ -1,8 +1,8 @@
-const gulp = require('gulp');
-const browserSync = require('browser-sync');
-const uglify = require('gulp-uglify');
-const sass = require('gulp-sass');
-const pug = require('gulp-pug');
+const gulp = require('gulp')
+const browserSync = require('browser-sync')
+const uglify = require('gulp-uglify')
+const sass = require('gulp-sass')
+const pug = require('gulp-pug')
 /*
   -- TOP LEVEL FUNCTIONS --
   gulp.task - Define tasks
@@ -11,35 +11,42 @@ const pug = require('gulp-pug');
   gulp.watch - watch files and folders for changes
 */
 
+gulp.task('gulp', () => {
+  console.log('Esta funcionando...')
+})
+
 // Minify JS
-gulp.task('minify', () =>{
+gulp.task('minify', () => {
   gulp.src('src/js/*.js')
     .pipe(uglify())
-    .pipe(gulp.dest('dev/js'));
-});
+    .pipe(gulp.dest('dev/js'))
+})
 
 // Compile Sass
-gulp.task('sass', () =>{
+gulp.task('sass', () => {
   gulp.src('dev/sass/*.scss')
     .pipe(sass().on('error', sass.logError))
-    .pipe(gulp.dest('src/css'));
-});
+    .pipe(gulp.dest('src/css'))
+})
 
 // Compile Sass
-gulp.task('pug', () =>{
+gulp.task('pug', () => {
   gulp.src('dev/pug/*.pug')
-    .pipe(pug())
-    .pipe(gulp.dest('src/'));
-});
+    .pipe(pug({
+      pretty: true
+    }))
+    .pipe(gulp.dest('src/'))
+})
 
-gulp.task('default', ['minify', 'sass', 'pug']);
+gulp.task('default', ['minify', 'sass', 'pug'])
 
-gulp.task('watch', () =>{
+gulp.task('watch', () => {
   browserSync({
     server: {
       baseDir: 'src/'
     }
-  });
-  gulp.watch('dev/sass/*.scss', ['sass']);
-  gulp.watch('dev/pug/*.pug', ['pug']);
-});
+  })
+  gulp.watch('dev/sass/*.scss', ['sass'])
+  gulp.watch('dev/pug/*.pug', ['pug'])
+  gulp.watch('src/*.html').on('change', browserSync.reload)
+})
