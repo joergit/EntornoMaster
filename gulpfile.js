@@ -20,6 +20,7 @@ gulp.task('minify', () => {
   gulp.src('src/js/*.js')
     .pipe(uglify())
     .pipe(gulp.dest('dev/js'))
+    .pipe(browserSync.stream());
 })
 
 // Compile Sass
@@ -27,26 +28,28 @@ gulp.task('sass', () => {
   gulp.src('dev/sass/*.scss')
     .pipe(sass().on('error', sass.logError))
     .pipe(gulp.dest('src/css'))
+    .pipe(browserSync.stream());
 })
 
-// Compile Sass
+// Compile Pug
 gulp.task('pug', () => {
   gulp.src('dev/pug/*.pug')
     .pipe(pug({
       pretty: true
     }))
     .pipe(gulp.dest('src/'))
+    .pipe(browserSync.stream());
 })
 
 gulp.task('default', ['minify', 'sass', 'pug'])
 
 gulp.task('watch', () => {
-  browserSync({
+  browserSync.init({
     server: {
       baseDir: 'src/'
     }
   })
   gulp.watch('dev/sass/*.scss', ['sass'])
   gulp.watch('dev/pug/*.pug', ['pug'])
-  gulp.watch('src/*.html').on('change', browserSync.reload)
+  gulp.watch('src/index.html').on('change', browserSync.reload)
 })
