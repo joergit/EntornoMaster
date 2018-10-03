@@ -1,5 +1,4 @@
-// Test 01
-console.log('Test01');
-
-//Test 02
-console.log('Test02');
+let theNumber = Number(prompt("Pick a number"));
+  if (!Number.isNaN(theNumber)) {
+    console.log("YOur number is the square root of " + theNumber * theNumber);
+  };

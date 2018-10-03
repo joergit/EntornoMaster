@@ -11,10 +11,6 @@ const pug = require('gulp-pug')
   gulp.watch - watch files and folders for changes
 */
 
-gulp.task('gulp', () => {
-  console.log('Esta funcionando...')
-})
-
 // Minify JS
 gulp.task('minify', () => {
   gulp.src('src/js/*.js')
@@ -26,7 +22,9 @@ gulp.task('minify', () => {
 // Compile Sass
 gulp.task('sass', () => {
   gulp.src('dev/sass/*.scss')
-    .pipe(sass().on('error', sass.logError))
+    .pipe(sass({
+      outputStyle: 'compressed'
+    }).on('error', sass.logError))
     .pipe(gulp.dest('src/css'))
     .pipe(browserSync.stream());
 })
@@ -51,5 +49,6 @@ gulp.task('watch', () => {
   })
   gulp.watch('dev/sass/*.scss', ['sass'])
   gulp.watch('dev/pug/*.pug', ['pug'])
+  gulp.watch('src/js/*.js', ['minify'])
   gulp.watch('src/index.html').on('change', browserSync.reload)
 })
