@@ -1,6 +1,6 @@
 const gulp = require('gulp')
 const browserSync = require('browser-sync')
-const uglify = require('gulp-uglify')
+const uglify = require('gulp-uglify-es').default
 const sass = require('gulp-sass')
 const pug = require('gulp-pug')
 /*
